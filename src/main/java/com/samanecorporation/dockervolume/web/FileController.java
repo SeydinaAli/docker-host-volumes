@@ -45,8 +45,7 @@ public class FileController {
     @GetMapping("/getCours")
     public List<String> getCours() throws Exception{
         String url = "http://COURS-SERVICE/cours/all";
-        
-        ResponseEntity<String[]> responseEntity = template.getForEntity(url, String[].class);
+        ResponseEntity<List> responseEntity = template.getForEntity(url, List.class);
         var coursList = responseEntity.getBody();
         HttpStatus statusCode = (HttpStatus) responseEntity.getStatusCode();
         if(statusCode.equals(HttpStatus.OK)){
@@ -54,7 +53,6 @@ public class FileController {
         }else {
             throw new RuntimeException("Erreur");
         }
-
-        return Arrays.stream(coursList).toList();
+        return coursList;
     }
 }
